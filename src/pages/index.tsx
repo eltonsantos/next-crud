@@ -1,19 +1,28 @@
 import Layout from "@/components/Layout";
 import Table from "@/components/Table";
-import Client from "@/core/Client";
+import Customer from "@/core/Customer";
 
 export default function Home() {
 
-  const clients = [
-    new Client("Ana", 34, "1"),
-    new Client("Bia", 45, "2"),
-    new Client("Carlos", 23, "3"),
-    new Client("Daniel", 12, "4")
+  const customers = [
+    new Customer("Ana", 34, "1"),
+    new Customer("Bia", 45, "2"),
+    new Customer("Carlos", 23, "3"),
+    new Customer("Daniel", 12, "4")
   ]
+
+  function selectedCustomer(customer: Customer) {
+    console.log(customer.getName)
+  }
+
+  function removedCustomer(customer: Customer) {
+    console.log(customer.getName)
+  }
+
   return (
     <div className="flex h-screen justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500 text-white">
       <Layout title="Cadastro simples">
-        <Table clients={clients}></Table>
+        <Table customers={customers} selectedCustomer={selectedCustomer} removedCustomer={removedCustomer}></Table>
       </Layout>
     </div>
   )
