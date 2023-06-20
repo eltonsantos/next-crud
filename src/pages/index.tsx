@@ -7,6 +7,9 @@ import { useState } from "react";
 
 export default function Home() {
 
+  const [customer, setCustomer] = useState<Customer>(Customer.empty())
+  const [visible, setVisible] = useState<'table' | 'form'>('table')
+  
   const customers = [
     new Customer("Ana", 34, "1"),
     new Customer("Bia", 45, "2"),
@@ -14,18 +17,23 @@ export default function Home() {
     new Customer("Daniel", 12, "4")
   ]
 
-  const [visible, setVisible] = useState<'table' | 'form'>('table')
-
   function selectedCustomer(customer: Customer) {
-    console.log(customer.getName)
+    setCustomer(customer)
+    setVisible("form")
   }
 
   function removedCustomer(customer: Customer) {
     console.log(customer.getName)
   }
 
+  function newCustomer() {
+    setCustomer(Customer.empty())
+    setVisible("form")
+  }
+
   function saveCustomer(customer: Customer) {
     console.log(customer)
+    setVisible("table")
   }
 
   return (
@@ -34,12 +42,12 @@ export default function Home() {
         {visible === 'table' ? (
           <>
             <div className="flex justify-end">
-              <Button color="green" className="mb-4" onClick={() => setVisible('form')}>New Customer</Button>
+              <Button color="green" className="mb-4" onClick={newCustomer}>New Customer</Button>
             </div>
             <Table customers={customers} selectedCustomer={selectedCustomer} removedCustomer={removedCustomer}></Table>
           </>
         ) : (
-          <Form customer={customers[0]} changeCustomer={saveCustomer} canceled={() => setVisible('table')} />
+          <Form customer={customer} changeCustomer={saveCustomer} canceled={() => setVisible('table')} />
         )}
       </Layout>
     </div>
